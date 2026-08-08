@@ -36,7 +36,7 @@ public_users.post("/register", (req,res) => {
 // Get the book list available in the shop
 public_users.get('/', async function (req, res) {
     try {
-        const response = await axios.get('http://localhost:5000/books');
+        const response = await axios.get('http://localhost:5000/');
 
         return res.status(200).json(response.data);
     } catch (error) {
@@ -46,25 +46,7 @@ public_users.get('/', async function (req, res) {
     }
 });
 
-public_users.get('/books', function (req, res) {
-    return res.status(200).json(books);
-});
-
 // Get book details based on ISBN
-public_users.get('/isb/:isbn',function (req, res) {
-  //Write your code here
-  const isbn = req.params.isbn;
-  if(isbn){
-    let book = books[isbn];
-    if(book){
-        return res.status(200).json(book);
-    }else{
-        return res.status(404).send("Resource not found");
-    }
-    
-  }
-  
- });
  public_users.get('/isbn/:isbn', async function (req, res) {
     const isbn = req.params.isbn;
 
@@ -81,26 +63,6 @@ public_users.get('/isb/:isbn',function (req, res) {
     }
 });
 // Get book details based on author
-public_users.get('/authr/:author',function (req, res) {
-  //Write your code here
-  const author = req.params.author;
-  const booksByAuthor = [];
-
-    const bookKeys = Object.keys(books);
-    bookKeys.forEach(key => {
-        if (books[key].author === author) {
-            booksByAuthor.push(books[key]);
-        }
-    });
-
-    if (booksByAuthor.length > 0) {
-        return res.status(200).json(booksByAuthor);
-    }
-
-    return res.status(404).json({
-        message: "No books found for this author"
-    });
-});
 public_users.get('/author/:author', async function (req, res) {
     const author = req.params.author;
 
@@ -117,26 +79,7 @@ public_users.get('/author/:author', async function (req, res) {
     }
 });
 // Get all books based on title
-public_users.get('/titl/:title',function (req, res) {
-    const title = req.params.title;
-    const booksByTitle = [];
-  
-      const bookKeys = Object.keys(books);
-      bookKeys.forEach(key => {
-          if (books[key].title === title) {
-              booksByTitle.push(books[key]);
-          }
-      });
-  
-      if (booksByTitle.length > 0) {
-          return res.status(200).json(booksByTitle);
-      }
-  
-      return res.status(404).json({
-          message: "No books found for this title"
-      });});
-
-      public_users.get('/title/:title', async function (req, res) {
+ public_users.get('/title/:title', async function (req, res) {
         const title = req.params.title;
     
         try {
